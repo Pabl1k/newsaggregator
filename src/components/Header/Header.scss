@@ -1,0 +1,13 @@
+.header {
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #fff;
+
+  &__logo {
+    font-size: 3rem;
+  }
+}

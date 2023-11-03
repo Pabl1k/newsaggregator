@@ -1,0 +1,28 @@
+@import "../styles/index";
+
+.app {
+  display: flex;
+  flex-direction: column;
+  padding: 0 3vw;
+  background-color: #000000;
+  color: #fff;
+  min-height: 100vh;
+
+  &__label {
+    margin: 1rem 0;
+
+    @include if-mobile {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+
+    @include if-tablet {
+      justify-content: space-around;
+    }
+  }
+}

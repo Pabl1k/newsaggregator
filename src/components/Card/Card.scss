@@ -1,0 +1,58 @@
+@import "../../styles/index";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
+$border-radius: 10px;
+
+.card {
+  border: 2px solid #fff;
+  border-radius: $border-radius;
+  cursor: pointer;
+  width: 300px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 2rem 2rem 0;
+  font-family: 'Roboto Slab', serif;
+
+  @include if-tablet {
+    margin: 0 0 2rem 0;
+    width: 40vw;
+  }
+
+  @include if-mobile {
+    width: 90vw;
+    margin: 0 0 2rem 0;
+  }
+
+  img {
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+
+    max-width: 100%;
+    transition: all 0.3s ease-in-out;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1);
+  }
+
+  &__content {
+    padding: .5rem;
+  }
+
+  &__title {
+    margin-bottom: .5rem;
+  }
+
+  &__description {
+    font-size: .9rem;
+  }
+
+  &:hover {
+    border: 2px solid #ffd7d7;
+
+    img {
+      transform: scale(1.05);
+      filter: brightness(110%);
+    }
+  }
+}
