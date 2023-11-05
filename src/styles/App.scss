@@ -16,13 +16,4 @@
       justify-content: center;
     }
   }
-
-  &__content {
-    display: flex;
-    flex-wrap: wrap;
-
-    @include if-tablet {
-      justify-content: space-around;
-    }
-  }
 }
