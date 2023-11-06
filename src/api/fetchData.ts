@@ -4,6 +4,7 @@ import { GuardianApiParams, GuardianApiResponse } from "./types/Guardian.ts";
 import { NYTApiResponse } from "./types/NewYorkTimes.ts";
 import {
   mapGuardianDtoToModel,
+  mapModelToGuardianDto,
   mapNewsApiDtoToModel,
   mapNYTDtoToModel,
 } from "./mapper.ts";
@@ -23,7 +24,7 @@ export const fetchNewsApi = async (params: NewsApiParams) => {
 export const fetchGuardian = async (params: GuardianApiParams) => {
   const key = import.meta.env.VITE_GUARDIAN_API_KEY;
   const domain = "https://content.guardianapis.com/search";
-  const path = pathCreator(params);
+  const path = pathCreator(mapModelToGuardianDto(params));
   const url = `${domain}${path}&api-key=${key}`;
 
   const response = await fetch(url);

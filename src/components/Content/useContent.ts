@@ -19,10 +19,11 @@ export const useContent = (searchParams: SearchParams) => {
       },
       {
         queryKey: ["newYorkTimes"],
-        queryFn: () => fetchNYT(searchParams.nyt.pageSize),
+        queryFn: () => fetchNYT(searchParams.nyt.publishedDaysAgo),
       },
     ],
   });
+
   const newsApiData = newsApi.data ?? [];
   const guardianData = guardian.data ?? [];
   const newYorkTimesData = newYorkTimes.data ?? [];

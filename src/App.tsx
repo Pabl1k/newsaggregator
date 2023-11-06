@@ -11,21 +11,24 @@ const App = () => {
       from: getInitialSearchDate(),
       language: "en",
       pageSize: 10,
+      page: 1,
     },
     guardian: {
       fromDate: getInitialSearchDate(),
       pageSize: 10,
+      page: 1,
     },
     nyt: {
-      pageSize: 7,
+      publishedDaysAgo: 7,
     },
   };
   const searchParams = initialSearchParams;
+  const period = 30;
 
   return (
     <div className="app">
       <Header />
-      <h1 className="app__label">The latest news:</h1>
+      <h1 className="app__label">News for the last: {period} days</h1>
       <Content searchParams={searchParams} />
     </div>
   );

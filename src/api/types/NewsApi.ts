@@ -14,8 +14,9 @@ export interface NewsApiParams {
   sources: string;
   from: string;
   pageSize: number;
+  page: number;
   language: Language;
-  q?: string;
+  keyword?: string;
   to?: string;
   sortBy?: SortBy;
   category?: Category;

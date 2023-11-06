@@ -1,5 +1,5 @@
 export interface NYTApiParams {
-  pageSize: 1 | 7 | 30;
+  publishedDaysAgo: 1 | 7 | 30;
 }
 
 interface Media {

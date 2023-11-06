@@ -1,8 +1,8 @@
 export interface GuardianApiParams {
   fromDate: string;
   pageSize: number;
-  q?: string;
-  tag?: string;
+  page: number;
+  keyword?: string;
   toDate?: string;
   section?: string;
 }
