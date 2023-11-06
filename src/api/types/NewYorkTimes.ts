@@ -1,4 +1,24 @@
-interface Result {
+export interface NYTApiParams {
+  pageSize: 1 | 7 | 30;
+}
+
+interface Media {
+  type: string;
+  subtype: string;
+  caption: string;
+  copyright: string;
+  approved_for_syndication: number;
+  "media-metadata": MediaMetadata[];
+}
+
+interface MediaMetadata {
+  url: string;
+  format: string;
+  height: number;
+  width: number;
+}
+
+export interface NYTResult {
   uri: string;
   url: string;
   id: number;
@@ -23,25 +43,9 @@ interface Result {
   eta_id: number;
 }
 
-interface Media {
-  type: string;
-  subtype: string;
-  caption: string;
-  copyright: string;
-  approved_for_syndication: number;
-  "media-metadata": MediaMetadata[];
-}
-
-interface MediaMetadata {
-  url: string;
-  format: string;
-  height: number;
-  width: number;
-}
-
 export interface NYTApiResponse {
   copyright: string;
   num_results: number;
-  results: Result[];
+  results: NYTResult[];
   status: string;
 }

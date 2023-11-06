@@ -1,4 +1,4 @@
-const getInitialSearchDate = () => {
+export const getInitialSearchDate = () => {
   const currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() - 1);
 
