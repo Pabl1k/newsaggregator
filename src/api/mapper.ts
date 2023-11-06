@@ -3,13 +3,25 @@ import { NewsApiResponse } from "./types/NewsApi.ts";
 import { GuardianResult } from "./types/Guardian.ts";
 import { Result } from "./types/model.ts";
 
+type DateFormat = `${string}-${string}-${string}`;
+
+const dateToFormat = (publishedAt: string): DateFormat => {
+  const date = new Date(publishedAt);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 export const mapNewsApiDtoToModel = (data: NewsApiResponse): Result => ({
   id: data.url,
   author: data.author,
   content: data.content,
   description: data.description,
   imageUrl: data.urlToImage,
-  publishedAt: data.publishedAt,
+  publishedAt: dateToFormat(data.publishedAt),
   section: null,
   sourceName: data.source.name,
   sourceUrl: data.url,
@@ -22,7 +34,7 @@ export const mapGuardianDtoToModel = (data: GuardianResult): Result => ({
   content: null,
   description: null,
   imageUrl: null,
-  publishedAt: data.webPublicationDate,
+  publishedAt: dateToFormat(data.webPublicationDate),
   section: data.sectionName,
   sourceName: "The Guardian",
   sourceUrl: data.webUrl,
