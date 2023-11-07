@@ -2,16 +2,14 @@ import { FC } from "react";
 import Card from "../Card/Card.tsx";
 import "./Content.scss";
 import Skeleton from "../Card/Skeleton.tsx";
-import { useContent } from "./useContent.ts";
-import { SearchParams } from "../../global/Types.ts";
+import { Result } from "../../api/types/model.ts";
 
 interface Props {
-  searchParams: SearchParams;
+  data: Result[];
+  loading: boolean;
 }
 
-const Content: FC<Props> = ({ searchParams }) => {
-  const { data, loading } = useContent(searchParams);
-
+const Content: FC<Props> = ({ data, loading }) => {
   return (
     <div className="content">
       {loading ? (

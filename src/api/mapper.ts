@@ -1,5 +1,5 @@
 import { NYTResult } from "./types/NewYorkTimes.ts";
-import { NewsApiResponse } from "./types/NewsApi.ts";
+import { NewsApiParams, NewsApiResponse } from "./types/NewsApi.ts";
 import { GuardianApiParams, GuardianResult } from "./types/Guardian.ts";
 import { Result } from "./types/model.ts";
 
@@ -44,7 +44,7 @@ export const mapGuardianDtoToModel = (data: GuardianResult): Result => ({
 export const mapNYTDtoToModel = (data: NYTResult): Result => ({
   id: data.id.toString(),
   author: data.byline,
-  content: null,
+  content: data.adx_keywords,
   description: data.abstract,
   imageUrl: data.media[0]["media-metadata"][0]?.url ?? null,
   publishedAt: data.published_date,
@@ -54,11 +54,18 @@ export const mapNYTDtoToModel = (data: NYTResult): Result => ({
   title: data.title,
 });
 
+export const mapModelToNewsApiDto = (params: NewsApiParams) => ({
+  ...params,
+  q: params.keyword,
+  keyword: undefined,
+  category: undefined,
+});
+
 export const mapModelToGuardianDto = (params: GuardianApiParams) => ({
   ["from-date"]: params.fromDate,
   ["to-date"]: params.toDate,
   ["page-size"]: params.pageSize,
   q: params.keyword,
-  section: params.section,
+  section: params.section?.toLowerCase(),
   lang: "en",
 });

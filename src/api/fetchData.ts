@@ -5,6 +5,7 @@ import { NYTApiResponse } from "./types/NewYorkTimes.ts";
 import {
   mapGuardianDtoToModel,
   mapModelToGuardianDto,
+  mapModelToNewsApiDto,
   mapNewsApiDtoToModel,
   mapNYTDtoToModel,
 } from "./mapper.ts";
@@ -12,7 +13,7 @@ import {
 export const fetchNewsApi = async (params: NewsApiParams) => {
   const key = import.meta.env.VITE_NEWS_API_KEY;
   const domain = "https://newsapi.org/v2/everything";
-  const path = pathCreator(params);
+  const path = pathCreator(mapModelToNewsApiDto(params));
   const url = `${domain}${path}&apiKey=${key}`;
 
   const response = await fetch(url);

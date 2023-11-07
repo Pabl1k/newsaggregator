@@ -36,10 +36,12 @@ $border-radius: 10px;
   }
 
   &__content {
+    display: flex;
+    flex-direction: column;
     padding: 0.5rem;
   }
 
-  &__publication-day {
+  &__publication-day-or-section {
     color: #000;
     font-size: 14px;
   }
