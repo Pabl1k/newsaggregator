@@ -17,7 +17,7 @@ $border-radius: 10px;
     width: 40vw;
   }
 
-  @include if-mobile {
+  @include if-small-tablet {
     width: 90vw;
     margin: 0 0 2rem 0;
   }

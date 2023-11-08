@@ -1,5 +1,6 @@
+@import "../../styles/index";
+
 .header {
-  height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +15,23 @@
   &__container {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
     width: 100%;
+
+    @include if-mobile {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__menu-container {
+    background-color: transparent;
+    border: none;
+  }
+
+  &__menu-icon {
+    height: 40px;
+    width: 40px;
   }
 }

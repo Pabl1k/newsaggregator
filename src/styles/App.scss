@@ -11,7 +11,7 @@
   &__label {
     margin: 1rem 0;
 
-    @include if-mobile {
+    @include if-small-tablet {
       display: flex;
       justify-content: center;
     }
