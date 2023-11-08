@@ -5,6 +5,7 @@ import {
   getSearchStartDate,
   getTodayDate,
 } from "../../global/functions/getInitialDate.ts";
+import { useFilters } from "../../global/useFilters.ts";
 
 export interface DateRange {
   from: string;
@@ -33,7 +34,7 @@ const initialFilters: Filters = {
 export const useContent = () => {
   const { data, loading, dataFetched } = useRequestData();
   const [state, setState] = useState<Result[]>([]);
-  const [filters, setFilters] = useState(initialFilters);
+  const [filters, setFilters] = useFilters(initialFilters);
 
   const sources = useMemo(
     () => [...new Set(data.map((item) => item.sourceName))],
@@ -89,7 +90,8 @@ export const useContent = () => {
       return;
     }
 
-    const filtered = state.filter((item) => item.section === category);
+    const dataForFilter = filters.category === category ? state : data;
+    const filtered = dataForFilter.filter((item) => item.section === category);
     setFilters({ ...filters, category });
     setState(filtered);
   };
@@ -101,7 +103,8 @@ export const useContent = () => {
       return;
     }
 
-    const filtered = state.filter((item) => item.sourceName === source);
+    const dataForFilter = filters.source === source ? state : data;
+    const filtered = dataForFilter.filter((item) => item.sourceName === source);
     setFilters({ ...filters, source });
     setState(filtered);
   };
