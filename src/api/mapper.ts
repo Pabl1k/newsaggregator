@@ -1,6 +1,7 @@
+import { RequestParams } from "../global/Types.ts";
 import { NYTResult } from "./types/NewYorkTimes.ts";
-import { NewsApiParams, NewsApiResponse } from "./types/NewsApi.ts";
-import { GuardianApiParams, GuardianResult } from "./types/Guardian.ts";
+import { NewsApiResponse } from "./types/NewsApi.ts";
+import { GuardianResult } from "./types/Guardian.ts";
 import { Result } from "./types/model.ts";
 
 type DateFormat = `${string}-${string}-${string}`;
@@ -54,18 +55,17 @@ export const mapNYTDtoToModel = (data: NYTResult): Result => ({
   title: data.title,
 });
 
-export const mapModelToNewsApiDto = (params: NewsApiParams) => ({
-  ...params,
-  q: params.keyword,
-  keyword: undefined,
-  category: undefined,
+export const mapModelToNewsApiDto = (params: RequestParams) => ({
+  from: params.fromDate,
+  to: params.toDate,
+  sources: "bbc-news,associated-press,the-wall-street-journal,espn,cnn",
+  pageSize: 20,
+  language: "en",
 });
 
-export const mapModelToGuardianDto = (params: GuardianApiParams) => ({
+export const mapModelToGuardianDto = (params: RequestParams) => ({
   ["from-date"]: params.fromDate,
   ["to-date"]: params.toDate,
-  ["page-size"]: params.pageSize,
-  q: params.keyword,
-  section: params.section?.toLowerCase(),
+  ["page-size"]: 20,
   lang: "en",
 });

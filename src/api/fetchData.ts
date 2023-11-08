@@ -1,6 +1,6 @@
 import { pathCreator } from "../global/functions/utils.ts";
-import { NewsApiDto, NewsApiParams } from "./types/NewsApi.ts";
-import { GuardianApiParams, GuardianApiResponse } from "./types/Guardian.ts";
+import { NewsApiDto } from "./types/NewsApi.ts";
+import { GuardianApiResponse } from "./types/Guardian.ts";
 import { NYTApiResponse } from "./types/NewYorkTimes.ts";
 import {
   mapGuardianDtoToModel,
@@ -9,8 +9,9 @@ import {
   mapNewsApiDtoToModel,
   mapNYTDtoToModel,
 } from "./mapper.ts";
+import { RequestParams } from "../global/Types.ts";
 
-export const fetchNewsApi = async (params: NewsApiParams) => {
+export const fetchNewsApi = async (params: RequestParams) => {
   const key = import.meta.env.VITE_NEWS_API_KEY;
   const domain = "https://newsapi.org/v2/everything";
   const path = pathCreator(mapModelToNewsApiDto(params));
@@ -22,7 +23,7 @@ export const fetchNewsApi = async (params: NewsApiParams) => {
   return data.articles.map(mapNewsApiDtoToModel);
 };
 
-export const fetchGuardian = async (params: GuardianApiParams) => {
+export const fetchGuardian = async (params: RequestParams) => {
   const key = import.meta.env.VITE_GUARDIAN_API_KEY;
   const domain = "https://content.guardianapis.com/search";
   const path = pathCreator(mapModelToGuardianDto(params));
@@ -34,9 +35,9 @@ export const fetchGuardian = async (params: GuardianApiParams) => {
   return data.response.results.map(mapGuardianDtoToModel);
 };
 
-export const fetchNYT = async (pageSize: number) => {
+export const fetchNYT = async () => {
   const key = import.meta.env.VITE_NYT_API_KEY;
-  const url = `https://api.nytimes.com/svc/mostpopular/v2/viewed/${pageSize}.json?api-key=${key}`;
+  const url = `https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=${key}`;
 
   const response = await fetch(url);
   const data: NYTApiResponse = await response.json();

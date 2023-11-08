@@ -1,26 +1,29 @@
 import { FC } from "react";
+import { DateRange, Filters } from "../Content/useContent.ts";
 import Input from "../Input/Input.tsx";
 import DateSelector from "../DateSelector/DateSelector.tsx";
-import "./Header.scss";
 import Select from "../Select/Select.tsx";
+import "./Header.scss";
 
 interface Props {
+  filters: Filters;
   categories: string[];
   sources: string[];
-  onKeywordSearch: (keyword: string) => void;
-  onFromDateSearch: (from: string) => void;
-  onToDateSearch: (to: string) => void;
-  onCategorySelect: (category: string) => void;
-  onSourceSelect: (source: string) => void;
+  setKeywordFilter: (value: string | null) => void;
+  onKeywordSearch: (keyword: string | null) => void;
+  onDateSearch: (dateRange: DateRange) => void;
+  onCategorySelect: (category: string | null) => void;
+  onSourceSelect: (source: string | null) => void;
   onClearFilters: () => void;
 }
 
 const Header: FC<Props> = ({
+  filters,
   categories,
   sources,
+  setKeywordFilter,
   onKeywordSearch,
-  onFromDateSearch,
-  onToDateSearch,
+  onDateSearch,
   onCategorySelect,
   onSourceSelect,
   onClearFilters,
@@ -30,14 +33,24 @@ const Header: FC<Props> = ({
       <div className="header__logo">NEWS LOGO</div>
       <div className="header__container">
         <button onClick={onClearFilters}>Clear all filters</button>
-        <Select title="Source" options={sources} onSelect={onSourceSelect} />
+        <Select
+          title="Source"
+          value={filters.source}
+          options={sources}
+          onSelect={onSourceSelect}
+        />
         <Select
           title="Category"
+          value={filters.category}
           options={categories}
           onSelect={onCategorySelect}
         />
-        <DateSelector onFrom={onFromDateSearch} onTo={onToDateSearch} />
-        <Input onSearch={onKeywordSearch} />
+        <DateSelector dateRange={filters.dateRange} onChange={onDateSearch} />
+        <Input
+          value={filters.keyword}
+          onChange={setKeywordFilter}
+          onSearch={onKeywordSearch}
+        />
       </div>
     </div>
   );

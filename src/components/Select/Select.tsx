@@ -3,26 +3,21 @@ import "./Select.scss";
 
 interface Props {
   title: string;
+  value: string | null;
   options: string[];
-  onSelect: (option: string) => void;
+  onSelect: (option: string | null) => void;
 }
 
-const Select: FC<Props> = ({ title, options, onSelect }) => {
+const Select: FC<Props> = ({ title, value, options, onSelect }) => {
   const optionsWithAll = ["All", ...options];
-
-  const onChange = (value: string) => {
-    if (value === "All") {
-      onSelect("");
-      return;
-    }
-
-    onSelect(value);
-  };
 
   return (
     <div className="select">
       <span>{title}</span>
-      <select onChange={(e) => onChange(e.currentTarget.value)}>
+      <select
+        value={value ?? "All"}
+        onChange={(e) => onSelect(e.currentTarget.value)}
+      >
         {optionsWithAll.map((option) => (
           <option key={option} value={option}>
             {option}

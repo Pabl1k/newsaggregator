@@ -1,29 +1,30 @@
-import { FC, useState } from "react";
+import { FC, KeyboardEvent } from "react";
 import "./Input.scss";
 
 interface Props {
-  onSearch: (search: string) => void;
+  value: string | null;
+  onChange: (value: string | null) => void;
+  onSearch: (search: string | null) => void;
 }
 
-const Input: FC<Props> = ({ onSearch }) => {
-  const [value, setValue] = useState("");
-
-  const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+const Input: FC<Props> = ({ value, onChange, onSearch }) => {
+  const onEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onSearch(value);
+      onSearch(e.currentTarget.value);
     }
   };
+
   const onClear = () => {
-    setValue("");
-    onSearch("");
+    onSearch(null);
   };
+
   return (
     <div className="input">
       <input
         type="text"
-        value={value}
+        value={value ?? ""}
         placeholder="Search by keywords"
-        onChange={(e) => setValue(e.currentTarget.value)}
+        onChange={(e) => onChange(e.currentTarget.value)}
         onKeyPress={onEnterPress}
       />
       <button onClick={onClear}>Clear</button>

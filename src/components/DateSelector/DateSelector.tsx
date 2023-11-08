@@ -1,26 +1,14 @@
 import { FC } from "react";
-import {
-  getInitialSearchDate,
-  getTodayDate,
-} from "../../global/functions/getInitialDate.ts";
+import { DateRange } from "../Content/useContent.ts";
 import "./DateSelector.scss";
 
 interface Props {
-  onFrom: (from: string) => void;
-  onTo: (to: string) => void;
+  dateRange: DateRange;
+  onChange: ({ from, to }: DateRange) => void;
 }
 
-const DateSelector: FC<Props> = ({ onFrom, onTo }) => {
-  const defaultFromDate = getInitialSearchDate();
-  const defaultToDate = getTodayDate();
-
-  const fromHandler = (from: string) => {
-    onFrom(from);
-  };
-
-  const toHandler = (to: string) => {
-    onTo(to);
-  };
+const DateSelector: FC<Props> = ({ dateRange, onChange }) => {
+  const { from, to } = dateRange;
 
   return (
     <div className="date-selector">
@@ -28,16 +16,16 @@ const DateSelector: FC<Props> = ({ onFrom, onTo }) => {
         <span>From</span>
         <input
           type="date"
-          defaultValue={defaultFromDate}
-          onChange={(e) => fromHandler(e.currentTarget.value)}
+          value={from}
+          onChange={(e) => onChange({ from: e.target.value, to })}
         />
       </div>
       <div className="date-selector__container">
         <span>To</span>
         <input
           type="date"
-          defaultValue={defaultToDate}
-          onChange={(e) => toHandler(e.currentTarget.value)}
+          value={to}
+          onChange={(e) => onChange({ from, to: e.target.value })}
         />
       </div>
     </div>

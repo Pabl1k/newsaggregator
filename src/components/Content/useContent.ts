@@ -1,119 +1,128 @@
-import { useQueries } from "@tanstack/react-query";
-import { fetchGuardian, fetchNewsApi, fetchNYT } from "../../api/fetchData.ts";
-import { SearchParams } from "../../global/Types.ts";
-import { NewsApiParams } from "../../api/types/NewsApi.ts";
-import { GuardianApiParams } from "../../api/types/Guardian.ts";
+import { useRequestData } from "../../api/useData.ts";
+import { useEffect, useMemo, useState } from "react";
+import { Result } from "../../api/types/model.ts";
+import {
+  getSearchStartDate,
+  getTodayDate,
+} from "../../global/functions/getInitialDate.ts";
 
-const newsApiQueryKey = (obj: NewsApiParams) => {
-  const keys = Object.keys(obj);
-  const result: never[] = [];
+export interface DateRange {
+  from: string;
+  to: string;
+}
 
-  for (const key of keys) {
-    if (key !== "category") {
-      return [...result, key];
-    }
-  }
+export interface Filters {
+  keyword: string | null;
+  dateRange: DateRange;
+  category: string | null;
+  source: string | null;
+}
 
-  return result;
+const initialDates = {
+  from: getSearchStartDate(),
+  to: getTodayDate(),
 };
 
-const guardianQueryKey = (obj: GuardianApiParams) => {
-  const keys = Object.keys(obj);
-  const result: never[] = [];
-
-  for (const key of keys) {
-    if (key !== "source") {
-      return [...result, key];
-    }
-  }
-
-  return result;
+const initialFilters: Filters = {
+  keyword: null,
+  dateRange: initialDates,
+  category: "All",
+  source: "All",
 };
 
-export const useContent = (searchParams: SearchParams) => {
-  const [newsApi, guardian, newYorkTimes] = useQueries({
-    queries: [
-      {
-        queryKey: newsApiQueryKey(searchParams.newsApi),
-        queryFn: () => fetchNewsApi(searchParams.newsApi),
-      },
-      {
-        queryKey: guardianQueryKey(searchParams.guardian),
-        queryFn: () => fetchGuardian(searchParams.guardian),
-      },
-      {
-        queryKey: ["newYorkTimes"],
-        queryFn: () => fetchNYT(searchParams.nyt.publishedDaysAgo),
-      },
-    ],
-  });
+export const useContent = () => {
+  const { data, loading, dataFetched } = useRequestData();
+  const [state, setState] = useState<Result[]>([]);
+  const [filters, setFilters] = useState(initialFilters);
 
-  const newsApiData = newsApi.data ?? [];
-  const guardianData = guardian.data ?? [];
-  const newYorkTimesData = newYorkTimes.data ?? [];
+  const sources = useMemo(
+    () => [...new Set(data.map((item) => item.sourceName))],
+    [dataFetched],
+  );
 
-  const filterNewsApiByCategory = () => {
-    const category = searchParams.newsApi.category;
+  const categories = useMemo(
+    () =>
+      data
+        .filter((item) => !!item.section)
+        .map((item) => item.section as string),
+    [dataFetched],
+  );
+  const uniqueCategories = [...new Set(categories)];
 
-    if (category) {
-      return newsApiData.filter(
-        (item) =>
-          item.description?.toLowerCase().includes(category.toLowerCase()),
-      );
-    }
-
-    return [];
+  const clearFilters = () => {
+    setFilters(initialFilters);
+    setState(data);
   };
 
-  const filterNewYorkTimesDataByKeyword = (keyword: string) =>
-    newYorkTimesData.filter(
-      (item) => item.content?.toLowerCase().includes(keyword.toLowerCase()),
+  const setKeywordFilter = (value: string | null) => {
+    setFilters({ ...filters, keyword: value });
+  };
+
+  const filterByKeyword = (keyword: string | null) => {
+    if (!keyword) {
+      clearFilters();
+      return;
+    }
+
+    const filtered = state.filter((item) =>
+      item.title.toLowerCase().split(" ").includes(keyword.toLowerCase()),
     );
 
-  const filterNewYorkTimesDataBySection = (section: string) =>
-    newYorkTimesData.filter(
-      (item) => item.section?.toLowerCase() === section.toLowerCase(),
+    setState(filtered);
+  };
+
+  const filterByDate = ({ from, to }: DateRange) => {
+    const fromDate = from ?? filters.dateRange.from;
+    const toDate = to ?? filters.dateRange.to;
+
+    const filteredFrom = data.filter(
+      (item) => item.publishedAt >= fromDate && item.publishedAt <= toDate,
     );
-
-  const newsApiDataToDisplay = searchParams.newsApi.category
-    ? filterNewsApiByCategory()
-    : newsApiData;
-
-  const newYorkTimesDataToDisplay = () => {
-    if (searchParams.nyt.keyword) {
-      return filterNewYorkTimesDataByKeyword(searchParams.nyt.keyword);
-    }
-
-    if (searchParams.nyt.section) {
-      return filterNewYorkTimesDataBySection(searchParams.nyt.section);
-    }
-
-    return newYorkTimesData;
+    setFilters({ ...filters, dateRange: { from, to } });
+    setState(filteredFrom);
   };
 
-  const combinedData = [
-    ...newsApiDataToDisplay,
-    ...guardianData,
-    ...newYorkTimesDataToDisplay(),
-  ];
+  const filterByCategory = (category: string | null) => {
+    if (category === "All") {
+      setFilters({ ...filters, category });
+      setState(data);
+      return;
+    }
 
-  const filterDataBySource = () => {
-    return combinedData.filter((item) => {
-      if (searchParams.guardian.source) {
-        return (
-          item.sourceName?.toLowerCase() ===
-          searchParams.guardian?.source.toLowerCase()
-        );
-      }
-    });
+    const filtered = state.filter((item) => item.section === category);
+    setFilters({ ...filters, category });
+    setState(filtered);
   };
 
-  const dataToDisplay = searchParams.guardian.source
-    ? filterDataBySource()
-    : combinedData;
+  const filterBySource = (source: string | null) => {
+    if (source === "All") {
+      setFilters({ ...filters, source });
+      setState(data);
+      return;
+    }
+
+    const filtered = state.filter((item) => item.sourceName === source);
+    setFilters({ ...filters, source });
+    setState(filtered);
+  };
+
+  useEffect(() => {
+    if (dataFetched) {
+      setState(data);
+    }
+  }, [dataFetched]);
 
   return {
-    data: dataToDisplay,
-    loading: newsApi.isLoading || guardian.isLoading || newYorkTimes.isLoading,
+    data: state,
+    loading,
+    filters,
+    sources,
+    categories: uniqueCategories,
+    setKeywordFilter,
+    filterByKeyword,
+    filterByDate,
+    filterByCategory,
+    filterBySource,
+    clearFilters,
   };
 };
