@@ -6,8 +6,6 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-EXPOSE 8080
-
 COPY package.json .
 COPY vite.config.ts .
 
