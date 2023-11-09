@@ -1,26 +1,4 @@
-import { IdName, Language } from "./model.ts";
-
-export type SortBy = "relevancy" | "popularity" | "publishedAt";
-export type Category =
-  | "business"
-  | "entertainment"
-  | "general"
-  | "health"
-  | "science"
-  | "sports"
-  | "technology";
-
-export interface NewsApiParams {
-  sources: string;
-  from: string;
-  pageSize: number;
-  page: number;
-  language: Language;
-  keyword?: string;
-  to?: string;
-  sortBy?: SortBy;
-  category?: Category;
-}
+import { IdName } from "../../global/Types.ts";
 
 export interface NewsApiDto {
   articles: NewsApiResponse[];

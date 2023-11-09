@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { DateRange, Filters } from "../Content/useContent.ts";
 import Input from "../Input/Input.tsx";
 import DateSelector from "../DateSelector/DateSelector.tsx";
 import Select from "../Select/Select.tsx";
 import menuIcon from "../../assets/icons/burgerMenu.svg";
 import closeIcon from "../../assets/icons/cross.svg";
+import { DateRange, Filters } from "../../global/Types.ts";
 import "./Header.scss";
 
 interface Props {
@@ -71,6 +71,7 @@ const Header: FC<Props> = ({
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);

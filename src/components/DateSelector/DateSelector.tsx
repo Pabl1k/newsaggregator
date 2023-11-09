@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DateRange } from "../Content/useContent.ts";
+import { DateRange } from "../../global/Types.ts";
 import "./DateSelector.scss";
 
 interface Props {

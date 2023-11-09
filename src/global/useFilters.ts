@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Filters } from "../components/Content/useContent.ts";
+import { Filters } from "./Types.ts";
 
 const CACHE_KEY = "news-filters";
 
@@ -14,6 +14,7 @@ export const useFilters = (initialFilters: Filters) => {
         window.localStorage.removeItem(CACHE_KEY);
       }
     }
+
     return initialFilters;
   });
 

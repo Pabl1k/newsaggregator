@@ -1,13 +1,3 @@
-export interface GuardianApiParams {
-  fromDate: string;
-  pageSize: number;
-  page: number;
-  source?: string;
-  keyword?: string;
-  toDate?: string;
-  section?: string;
-}
-
 type OrderBy = "newest" | "oldest" | "relevance";
 
 export interface GuardianResult {

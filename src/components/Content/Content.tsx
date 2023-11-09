@@ -1,8 +1,8 @@
 import { FC } from "react";
 import Card from "../Card/Card.tsx";
-import "./Content.scss";
 import Skeleton from "../Card/Skeleton.tsx";
 import { Result } from "../../api/types/model.ts";
+import "./Content.scss";
 
 interface Props {
   data: Result[];

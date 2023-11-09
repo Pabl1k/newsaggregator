@@ -1,4 +1,4 @@
-import { pathCreator } from "../global/functions/utils.ts";
+import { RequestParams } from "../global/Types.ts";
 import { NewsApiDto } from "./types/NewsApi.ts";
 import { GuardianApiResponse } from "./types/Guardian.ts";
 import { NYTApiResponse } from "./types/NewYorkTimes.ts";
@@ -9,7 +9,7 @@ import {
   mapNewsApiDtoToModel,
   mapNYTDtoToModel,
 } from "./mapper.ts";
-import { RequestParams } from "../global/Types.ts";
+import { pathCreator } from "./pathCreator.ts";
 
 export const fetchNewsApi = async (params: RequestParams) => {
   const key = import.meta.env.VITE_NEWS_API_KEY;

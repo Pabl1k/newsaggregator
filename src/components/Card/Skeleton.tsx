@@ -1,5 +1,5 @@
-import "./Skeleton.scss";
 import { uniqueId } from "../../global/functions/uniqueId.ts";
+import "./Skeleton.scss";
 
 const TABLET_SCREEN_WIDTH = 1060;
 const MOBILE_SCREEN_WIDTH = 706;

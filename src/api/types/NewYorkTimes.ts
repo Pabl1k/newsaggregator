@@ -1,12 +1,3 @@
-export interface NYTApiParams {
-  publishedDaysAgo: 1 | 7 | 30;
-  keyword?: string;
-  fromDate?: string;
-  toDate?: string;
-  section?: string;
-  source?: string;
-}
-
 interface Media {
   type: string;
   subtype: string;

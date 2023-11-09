@@ -1,6 +1,5 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Result } from "../../api/types/model.ts";
-import starIcon from "../../assets/icons/star.svg";
 import "./Card.scss";
 
 interface Props {
@@ -24,11 +23,6 @@ const Card: FC<Props> = ({ data }) => {
 
   const cardTitle = sourceUrl ? `Click to open in ${sourceName}` : undefined;
 
-  const handleAddToReadLater = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("Add to read later");
-  };
-
   return (
     <div className="card" title={cardTitle}>
       <a href={sourceUrl ?? ""} target="_blank">
@@ -48,11 +42,6 @@ const Card: FC<Props> = ({ data }) => {
           )}
           <h2 className="card__title">{title}</h2>
           <span className="card__description">{description}</span>
-        </div>
-        <div className="card__star-container">
-          <button onClick={handleAddToReadLater}>
-            <img src={starIcon} alt="star icon" title="Add to read later" />
-          </button>
         </div>
       </a>
     </div>

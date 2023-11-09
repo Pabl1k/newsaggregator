@@ -6,18 +6,7 @@ import {
   getTodayDate,
 } from "../../global/functions/getInitialDate.ts";
 import { useFilters } from "../../global/useFilters.ts";
-
-export interface DateRange {
-  from: string;
-  to: string;
-}
-
-export interface Filters {
-  keyword: string | null;
-  dateRange: DateRange;
-  category: string | null;
-  source: string | null;
-}
+import { DateRange, Filters } from "../../global/Types.ts";
 
 const initialDates = {
   from: getSearchStartDate(),

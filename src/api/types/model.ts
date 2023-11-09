@@ -1,10 +1,3 @@
-export interface IdName<T = string> {
-  id: T;
-  name: string;
-}
-
-export type Language = "en";
-
 export interface Result {
   id: string;
   author: string | null;
