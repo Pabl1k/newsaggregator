@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Filters } from "./Types.ts";
 
 const CACHE_KEY = "news-filters";
 
-export const useFilters = (initialFilters: Filters) => {
+const initialFilters = {};
+export const useFilters = () => {
   const [filters, setFilters] = useState(() => {
     const value = window.localStorage.getItem(CACHE_KEY);
 
