@@ -16,4 +16,37 @@
       justify-content: center;
     }
   }
+
+  select {
+    border-radius: 6px;
+    cursor: pointer;
+    height: 40px;
+    padding: 10px;
+
+    option {
+      text-transform: capitalize;
+    }
+  }
+
+  input {
+    height: 40px;
+    padding: 10px;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #fff;
+    background-color: #18181b;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+    padding: 10px;
+
+    &:hover {
+      color: #ff6767;
+    }
+  }
 }

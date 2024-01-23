@@ -1,5 +1,4 @@
-import { IdName } from "../../global/Types.ts";
-import { Category, Country, Language } from "./general.ts";
+import { Category, Country, IdName, Language } from "./general.ts";
 
 export interface Result {
   author: string;
@@ -16,6 +15,7 @@ export interface Response {
   articles: Result[];
   status: "ok" | "error";
   totalResults: number;
+  message?: string; // error message
 }
 
 export interface SourceResult extends IdName {
@@ -28,5 +28,5 @@ export interface SourceResult extends IdName {
 
 export interface SourceResponse {
   status: "ok" | "error";
-  sources: SourceResult;
+  sources: SourceResult[];
 }

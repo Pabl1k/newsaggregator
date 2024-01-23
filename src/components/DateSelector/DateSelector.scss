@@ -5,7 +5,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+  }
+
+  &__from {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  &__to {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
   }
 
   input {

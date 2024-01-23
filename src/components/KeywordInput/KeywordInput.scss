@@ -1,0 +1,16 @@
+.keyword-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__search-button {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  input {
+    font-size: 1.5em;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+}

@@ -15,7 +15,7 @@ type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
  *   Symbol - from words or phrases that must not appear
  *   AND | OR | NOT - Eg: crypto AND (ethereum OR litecoin) NOT bitcoin.
  */
-interface Params {
+interface CommonParams {
   q?: string;
   sources?: string;
   pageSize?: number;
@@ -29,14 +29,14 @@ interface Params {
  * @param searchIn: can be multiple, e.g?: "title,content"
  * @param sortBy: Default: publishedAt
  */
-interface All extends Params {
+interface All extends CommonParams {
   qInTitle?: string;
   searchIn?: "title" | "description" | "content";
   domains?: string;
   excludeDomains?: string;
   from?: DateFormat;
   to?: DateFormat;
-  language?: Language;
+  language: Language;
   sortBy?: "relevancy" | "popularity" | "publishedAt";
 }
 
@@ -51,7 +51,8 @@ export type AllParams = RequireAtLeastOne<
  * @param country: can't be used with sources
  * @param category: can't be used with sources
  */
-export interface TopParams extends Params {
+export interface TopParams extends CommonParams {
+  language: Language;
   country?: Country;
   category?: Category;
 }
@@ -60,4 +61,21 @@ export interface SourceParams {
   category?: Category;
   language?: Language;
   country?: Country;
+}
+
+export interface Params {
+  language: Language;
+  pageSize?: number;
+  page?: number;
+  q?: string;
+  sources?: string;
+  qInTitle?: string;
+  searchIn?: "title" | "description" | "content";
+  domains?: string;
+  excludeDomains?: string;
+  from?: DateFormat;
+  to?: DateFormat;
+  sortBy?: "relevancy" | "popularity" | "publishedAt";
+  country?: Country;
+  category?: Category;
 }

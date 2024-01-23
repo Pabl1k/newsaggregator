@@ -2,22 +2,23 @@
 
 .header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
   border-bottom: 1px solid #fff;
+  padding-bottom: 5px;
 
   &__logo {
-    font-size: 3rem;
+    img {
+      height: 80px;
+    }
   }
 
   &__container {
     display: flex;
-    justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
     width: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
 
     @include if-mobile {
       flex-direction: column;

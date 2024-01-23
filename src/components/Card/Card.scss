@@ -54,6 +54,10 @@ $border-radius: 10px;
     font-size: 0.9rem;
   }
 
+  &.no-image {
+    border: 2px solid #ffea85;
+  }
+
   &:hover {
     border: 2px solid #ffea85;
 
