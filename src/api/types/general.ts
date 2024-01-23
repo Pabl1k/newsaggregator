@@ -1,7 +1,10 @@
 export type SearchInSource = "all" | "top";
 
 export type DateFormat = `${string}-${string}-${string}`;
-
+export interface IdName {
+  id: string;
+  name: string;
+}
 export type Language =
   | "ar"
   | "de"

@@ -5,6 +5,8 @@ import { getData } from "./api/fetch.ts";
 import { Result } from "./api/types/response.ts";
 import { SearchInSource } from "./api/types/general.ts";
 
+const PAGE_SIZE = 20;
+
 export type FilterUpdateType = <K extends keyof Params>(
   key: K,
   value: Params[K]
@@ -12,8 +14,7 @@ export type FilterUpdateType = <K extends keyof Params>(
 
 const initialFilter: Params = {
   language: "en",
-  pageSize: 20,
-  page: 1
+  pageSize: PAGE_SIZE
 };
 
 const filterInvalidData = (data: Result[]) => {
@@ -33,13 +34,14 @@ const mapResponseToState = (data?: Array<Result[]>): Result[] => {
 };
 
 const getEndpoint = (params: Params): SearchInSource => {
-  if (params.q) {
+  if (params.qInTitle || params.sources) {
     return "all";
   }
+
   return "top";
 };
 
-const twoRowsHeight = 300;
+const twoRowsHeight = 300; // adoption
 const MAX_ALLOWED_PAGES = 5;
 
 export const useContent = () => {
@@ -56,8 +58,8 @@ export const useContent = () => {
       getData(getEndpoint(filter), { ...filter, page: pageParam }),
     initialPageParam: 1,
     getPreviousPageParam: () => undefined,
-    getNextPageParam: (_, allPages) => {
-      if (allPages.length < filter.page * 20) {
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length >= PAGE_SIZE) {
         return allPages.length + 1;
       } else {
         return undefined;
@@ -102,7 +104,6 @@ export const useContent = () => {
     state,
     loading,
     filter,
-    updateFilter,
-    resetFilters: () => setFilter(initialFilter)
+    updateFilter
   };
 };
