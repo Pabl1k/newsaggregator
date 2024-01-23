@@ -24,7 +24,7 @@ const KeywordInput: FC<Props> = ({ onSearch }) => {
 
   const onClear = () => {
     setValue(null);
-    handleSearch();
+    onSearch(null);
   };
 
   return (
