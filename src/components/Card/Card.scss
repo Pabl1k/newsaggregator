@@ -15,7 +15,7 @@ $border-radius: 10px;
   margin: 0 2rem 2rem 0;
   font-family: "Roboto Slab", serif;
 
-  @include if-tablet {
+  @include if-laptop {
     margin: 0 0 2rem 0;
     width: 40vw;
   }

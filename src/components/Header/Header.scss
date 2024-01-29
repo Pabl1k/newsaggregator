@@ -6,6 +6,10 @@
   border-bottom: 1px solid #fff;
   padding-bottom: 5px;
 
+  @include if-tablet {
+    flex-direction: column;
+  }
+  
   &__logo {
     img {
       height: 80px;

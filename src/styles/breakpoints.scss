@@ -1,6 +1,6 @@
 $breakpoint-mobile: 625px;
 $breakpoint-smallTablet: 706px;
-$breakpoint-tablet: 820px;
+$breakpoint-tablet: 865px;
 $breakpoint-laptop: 1060px;
 
 @mixin if-mobile {
@@ -16,6 +16,12 @@ $breakpoint-laptop: 1060px;
 }
 
 @mixin if-tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin if-laptop {
   @media screen and (max-width: $breakpoint-laptop) {
     @content;
   }
