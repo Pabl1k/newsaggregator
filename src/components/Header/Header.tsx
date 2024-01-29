@@ -30,7 +30,6 @@ const categories: Category[] = [
 const Header: FC<Props> = ({ filters, updateFilter }) => {
   const sourcesList = useSources({
     language: filters.language
-    // category: filters.category - not currently supported by API
   });
   const categoriesList: IdName[] = categories.map((category) => ({
     id: category,
