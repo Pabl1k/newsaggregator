@@ -1,10 +1,10 @@
-import { Category, Country, IdName, Language } from "./general.ts";
+import { Category, Country, DateFormat, IdName, Language } from "./general.ts";
 
-export interface Result {
+export interface Result<T = DateFormat> {
   author: string;
   content: string;
   description: string;
-  publishedAt: string;
+  publishedAt: T;
   source: IdName;
   title: string;
   url: string;

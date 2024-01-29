@@ -2,6 +2,7 @@ import { Response, SourceResponse } from "./types/response.ts";
 import { pathCreator } from "./pathCreator.ts";
 import { Params, SourceParams } from "./types/params.ts";
 import { SearchInSource as Endpoint } from "./types/general.ts";
+import { mapDataToModel } from "./mapper.ts";
 
 type RequestEndpoint = "everything" | "top-headlines" | "top-headlines/sources";
 
@@ -28,7 +29,7 @@ export const getData = async (endpoint: Endpoint, params: Params) => {
     alert(data.message);
   }
 
-  return data.articles;
+  return data.articles.map(mapDataToModel);
 };
 
 export const getSources = async (params?: SourceParams) => {
